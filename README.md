@@ -1,19 +1,80 @@
-This directory includes a few sample datasets to get you started.
+# 💬 Social Media Sentiment Analysis
 
-*   `california_housing_data*.csv` is California housing data from the 1990 US
-    Census; more information is available at:
-    https://developers.google.com/machine-learning/crash-course/california-housing-data-description
+This project focuses on analyzing the sentiment of tweets (positive or negative) using Natural Language Processing (NLP) and machine learning techniques. It uses the **Sentiment140** dataset containing 1.6 million pre-labeled tweets and builds a classification model using **Logistic Regression**.
 
-*   `mnist_*.csv` is a small sample of the
-    [MNIST database](https://en.wikipedia.org/wiki/MNIST_database), which is
-    described at: http://yann.lecun.com/exdb/mnist/
+---
 
-*   `anscombe.json` contains a copy of
-    [Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet); it
-    was originally described in
+## 📌 Project Objective
 
-    Anscombe, F. J. (1973). 'Graphs in Statistical Analysis'. American
-    Statistician. 27 (1): 17-21. JSTOR 2682899.
+To develop a machine learning model that can classify the sentiment of tweets as **positive** or **negative** by processing raw text data from social media.
 
-    and our copy was prepared by the
-    [vega_datasets library](https://github.com/altair-viz/vega_datasets/blob/4f67bdaad10f45e3549984e17e1b3088c731503d/vega_datasets/_data/anscombe.json).
+---
+
+## 🛠️ Technologies & Tools
+
+- **Programming Language**: Python
+- **Libraries Used**:
+  - `pandas`, `numpy` – Data manipulation
+  - `re` – Text cleaning using regular expressions
+  - `nltk` – Stopwords removal & stemming
+  - `scikit-learn` – TF-IDF, model training, evaluation
+  - `pickle` – Model saving & loading
+- **Dataset**: [Sentiment140 Dataset](https://www.kaggle.com/datasets/kazanova/sentiment140) (Kaggle)
+- **Environment**: Google Colab / Jupyter Notebook
+
+---
+
+## 📂 Dataset Description
+
+The dataset contains 1.6 million tweets labeled for sentiment.
+
+| Column | Description               |
+|--------|---------------------------|
+| target | Sentiment (0 = Negative, 4 = Positive) |
+| ids    | Tweet ID                  |
+| date   | Date of the tweet         |
+| flag   | Query                     |
+| user   | Username                  |
+| text   | Tweet content             |
+
+*Note: The target value `4` is remapped to `1` (positive) for binary classification.*
+
+---
+
+## 🔄 Project Workflow
+
+### 1. Data Collection
+- Used Kaggle API to download the dataset.
+- Extracted the compressed `.zip` file and loaded data using pandas.
+
+### 2. Data Preprocessing
+- Removed unwanted characters using regex.
+- Converted text to lowercase.
+- Removed stopwords using NLTK.
+- Applied stemming using **PorterStemmer**.
+
+### 3. Feature Engineering
+- Converted text data into numerical vectors using **TF-IDF Vectorizer**.
+
+### 4. Model Training
+- Split data into training and test sets (80/20).
+- Trained a **Logistic Regression** classifier with `max_iter=1000`.
+
+### 5. Evaluation
+- Accuracy:
+  - Training: ~78.4%
+  - Testing: ~77.8%
+- Verified model performance on unseen data.
+
+### 6. Model Saving & Deployment
+- Saved the model using `pickle` for future reuse.
+- Demonstrated predictions on new tweet samples.
+
+---
+
+## 🧪 Example Usage
+
+```python
+import pickle
+loaded_model = pickle.load(open('trained_model.sav', 'rb'))
+prediction = loaded_model.predict(X_new)
